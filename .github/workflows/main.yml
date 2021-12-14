@@ -25,14 +25,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Install Dependencies
-      - run: |
+        run: |
           apk add cmake gmp mpc1 mpfr4 make
   
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       
       - name: Build
-      - run: |
+        run: |
           make
       
       - name: Upload a Build Artifact

@@ -22,3 +22,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: default
+          toolchain: nightly
+          override: true
+          components: rust-src
+      
+      - name: Install PSP
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: cargo-psp
+      
+      - name: Build
+        uses: actions-rs/cargo@v1
+        with:
+          command: psp
+      
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.3.1
+        with:
+          name: psp_artifact # optional, default is artifact
+          path: target/mipsel-sony-psp/debug/EBOOT.PBP
+          if-no-files-found: warn # optional, default is warn
+          retention-days: 30 # optional
